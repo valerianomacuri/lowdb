@@ -11,6 +11,7 @@ type Low[T interface{}] struct {
 	Data    T
 }
 
+// New create a new instance of Low
 func New[T interface{}](adapter Adapter[T]) *Low[T] {
 	return &Low[T]{
 		adapter: adapter,
