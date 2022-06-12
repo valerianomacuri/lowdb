@@ -1,20 +1,40 @@
 # lowdb
 
-## Usage
+> Simple to use local JSON database. Powered by Go. Inspired in lowdb for
+> Javascript
 
-### Create a json file
-
-```console
-touch db.json
+```go
+db.Data.Posts = append(
+	db.Data.Posts, 
+	Data.Posts{ ID: 1, Title: "lowdb is awesome"},
+	)
 ```
-
-In file add:
 
 ```json
-{}
+// db.json
+{
+  "posts": [
+    { "id": 1, "title": "lowdb is awesome" }
+  ]
+}
 ```
 
-### Save data
+## Install
+
+```console
+go get github.com/valerianomacuri/lowdb
+```
+
+## Usage
+
+```console
+touch db.json && echo "{}" > db.json
+```
+
+```json
+// db.json
+{}
+```
 
 ```go
 package main
@@ -23,18 +43,29 @@ import (
 	"github.com/valerianomacuri/lowdb/adapters"
 	"github.com/valerianomacuri/lowdb/low"
 )
+
 // Define the data structure for database
 type Data struct {
-	Posts []string `json:"posts"`
+	Posts []Post `json:"posts"`
+}
+type Post struct {
+	ID    uint64 `json:"id"`
+	Title string `json:"title"`
 }
 
 func main() {
 	adapter := adapters.NewJSONFile[Data]("db.json")
 	db := low.New[Data](adapter)
-    // Read database
+	// Read data from JSON file, this will set db.Data content
 	db.Read()
-    // Write database in json
+
+	// Finally write db.Data content to file
 	defer db.Write()
-	db.Data.Posts = append(db.Data.Posts, "hello world", "hola mundo", "olá mundo")
+
+	// Append a post into posts array
+	db.Data.Posts = append(
+		db.Data.Posts,
+		Post{ID: 1, Title: "lowdb is awesome"},
+	)
 }
 ```
