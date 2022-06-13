@@ -19,12 +19,3 @@
 
 # Go workspace file
 go.work
-
-# Main file
-main.go
-
-# Database files
-*.json
-*.yaml
-*.yml
-*.toml
