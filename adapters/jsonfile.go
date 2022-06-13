@@ -1,19 +1,33 @@
 package adapters
 
+import (
+	"encoding/json"
+	"io/ioutil"
+)
+
 type JSONFile[T interface{}] struct {
-	adapter TextFile[T]
+	filename string
+	writer   Writer
 }
 
 func NewJSONFile[T interface{}](filename string) *JSONFile[T] {
 	return &JSONFile[T]{
-		adapter: *NewTextFile[T](filename),
+		filename: filename,
+		writer:   *NewWriter(filename),
 	}
 }
 
 func (j *JSONFile[T]) Read() T {
-	return j.adapter.Read()
+	file, err := ioutil.ReadFile(j.filename)
+	check(err)
+	var data T
+	err = json.Unmarshal(file, &data)
+	check(err)
+	return data
 }
 
 func (j *JSONFile[T]) Write(data T) {
-	j.adapter.Write(data)
+	dataInBytes, err := json.MarshalIndent(data, "", "	")
+	check(err)
+	j.writer.Write(dataInBytes)
 }

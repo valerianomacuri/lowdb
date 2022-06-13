@@ -1,5 +1,6 @@
 package low
 
+// Adapter for save in different formats
 type Adapter[T interface{}] interface {
 	Read() T
 	Write(data T)
