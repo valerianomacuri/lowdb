@@ -7,15 +7,15 @@ import (
 
 // Define the data structure for database
 type Data struct {
-	Posts []Post `json:"posts"`
+	Posts []Post `json:"posts" yaml:"posts"`
 }
 type Post struct {
-	ID    uint64 `json:"id"`
-	Title string `json:"title"`
+	ID    uint64 `json:"id" yaml:"id"`
+	Title string `json:"title" yaml:"title"`
 }
 
 func main() {
-	adapter := adapters.NewJSONFile[Data]("db.json")
+	adapter := adapters.NewYAMLFile[Data]("db.yml")
 	db := low.New[Data](adapter)
 	// Read data from JSON file, this will set db.Data content
 	db.Read()
