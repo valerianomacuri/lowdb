@@ -1,4 +1,4 @@
-# lowdb
+# lowdb [![Go Reference](https://pkg.go.dev/badge/github.com/valerianomacuri/lowdb.svg)](https://pkg.go.dev/github.com/valerianomacuri/lowdb)
 
 > Simple to use local JSON database. Powered by Go. Inspired in lowdb for
 > Javascript
